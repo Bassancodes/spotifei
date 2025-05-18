@@ -9,7 +9,7 @@ public class Conexao {
     private static final String USUARIO = "postgres";
     private static final String SENHA = "fei";
 
-    public static Connection conectar() {
+    public static Connection getConexao() {
         try {
             return DriverManager.getConnection(URL, USUARIO, SENHA);
         } catch (SQLException e) {
