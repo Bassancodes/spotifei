@@ -11,7 +11,7 @@ public class UsuarioDAO {
     public boolean verificarLogin(String email, String senha) {
         String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
 
-        try (Connection conn = Conexao.getConexao();
+        try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, email);
@@ -30,7 +30,7 @@ public class UsuarioDAO {
     public void cadastrarUsuario(Usuario u) {
         String sql = "INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?)";
 
-        try (Connection conn = Conexao.getConexao();
+        try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, u.getNome());
