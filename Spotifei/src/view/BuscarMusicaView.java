@@ -10,74 +10,79 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class BuscarMusicaView extends JFrame {
-
     private JTextField txtBuscar;
-    private JTextArea txtResultado;
+    private JButton btnBuscar;
+    private JList<Musica> listaResultados;
+    private DefaultListModel<Musica> modeloLista;
+    private JButton btnVoltar;
 
-    public BuscarMusicaView() {
+    private int idUsuario;
+
+    public BuscarMusicaView(int idUsuario) {
+        this.idUsuario = idUsuario;
         setTitle("Spotifei - Buscar Músicas");
         setSize(500, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        JPanel painel = new JPanel(new BorderLayout(10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        setLayout(new BorderLayout());
 
-        // Parte superior (busca)
-        JPanel painelBusca = new JPanel(new BorderLayout(5, 5));
+        JPanel painelBusca = new JPanel();
+        painelBusca.setLayout(new FlowLayout());
+
         JLabel lblBuscar = new JLabel("Buscar por nome, artista ou gênero:");
-        txtBuscar = new JTextField();
-        JButton btnBuscar = new JButton("Buscar");
+        txtBuscar = new JTextField(20);
+        btnBuscar = new JButton("Buscar");
 
-        painelBusca.add(lblBuscar, BorderLayout.NORTH);
-        painelBusca.add(txtBuscar, BorderLayout.CENTER);
-        painelBusca.add(btnBuscar, BorderLayout.EAST);
+        painelBusca.add(lblBuscar);
+        painelBusca.add(txtBuscar);
+        painelBusca.add(btnBuscar);
 
-        // Área de resultado
-        txtResultado = new JTextArea();
-        txtResultado.setEditable(false);
-        JScrollPane scroll = new JScrollPane(txtResultado);
+        add(painelBusca, BorderLayout.NORTH);
 
-        // Botão voltar
-        JButton btnVoltar = new JButton("Voltar");
+        modeloLista = new DefaultListModel<>();
+        listaResultados = new JList<>(modeloLista);
+        add(new JScrollPane(listaResultados), BorderLayout.CENTER);
 
-        // Adicionando ao painel principal
-        painel.add(painelBusca, BorderLayout.NORTH);
-        painel.add(scroll, BorderLayout.CENTER);
-        painel.add(btnVoltar, BorderLayout.SOUTH);
+        btnVoltar = new JButton("Voltar");
+        JPanel painelInferior = new JPanel(new FlowLayout());
+        painelInferior.add(btnVoltar);
+        add(painelInferior, BorderLayout.SOUTH);
 
-        add(painel);
-        setVisible(true);
-
-        // Ação buscar
         btnBuscar.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String termo = txtBuscar.getText().trim();
                 if (!termo.isEmpty()) {
                     MusicaDAO dao = new MusicaDAO();
                     List<Musica> lista = dao.buscarPorTermo(termo);
-                    txtResultado.setText("");
-
+                    modeloLista.clear();
                     if (lista.isEmpty()) {
-                        txtResultado.setText("Nenhuma música encontrada.");
+                        JOptionPane.showMessageDialog(null, "Nenhuma música encontrada.");
                     } else {
                         for (Musica m : lista) {
-                            txtResultado.append("Título: " + m.getTitulo() +
-                                    " | Gênero: " + m.getGenero() +
-                                    " | Duração: " + m.getDuracao() + "s\n");
+                            modeloLista.addElement(m);
                         }
                     }
-                } else {
-                    txtResultado.setText("Digite um termo para buscar.");
                 }
             }
         });
 
-        // Ação voltar
-        btnVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose(); // fecha apenas esta janela
+        listaResultados.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                Musica musicaSelecionada = listaResultados.getSelectedValue();
+                if (musicaSelecionada != null) {
+                    new DetalhesMusicaView(musicaSelecionada, idUsuario);
+                    dispose();
+                }
             }
         });
+
+        btnVoltar.addActionListener(e -> {
+            new MenuView(idUsuario);
+            dispose();
+        });
+
+        setVisible(true);
     }
 }

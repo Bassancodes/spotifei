@@ -2,52 +2,66 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class MenuView extends JFrame {
-    
-    public MenuView() {
+
+    private int idUsuario;
+
+    public MenuView(int idUsuario) {
+        this.idUsuario = idUsuario;
+
         setTitle("Spotifei - Menu Principal");
-        setSize(400, 400);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 300);
         setLocationRelativeTo(null);
+        setLayout(new GridLayout(6, 1));
 
-       
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 1, 10, 10));
-
-      
         JButton btnBuscarMusicas = new JButton("Buscar músicas");
-        JButton btnListarInfo = new JButton("Listar informações da música");
+        JButton btnListarInfos = new JButton("Listar informações da música");
         JButton btnCurtirDescurtir = new JButton("Curtir / Descurtir músicas");
-        JButton btnPlaylists = new JButton("Gerenciar playlists");
+        JButton btnGerenciarPlaylists = new JButton("Gerenciar playlists");
         JButton btnHistorico = new JButton("Visualizar histórico");
         JButton btnVoltar = new JButton("Voltar");
 
-        
-        panel.add(btnBuscarMusicas);
-        panel.add(btnListarInfo);
-        panel.add(btnCurtirDescurtir);
-        panel.add(btnPlaylists);
-        panel.add(btnHistorico);
-        panel.add(btnVoltar);
+        add(btnBuscarMusicas);
+        add(btnListarInfos);
+        add(btnCurtirDescurtir);
+        add(btnGerenciarPlaylists);
+        add(btnHistorico);
+        add(btnVoltar);
 
-       
-        btnVoltar.addActionListener(new ActionListener() {
-            
-            public void actionPerformed(ActionEvent e) {
-                
-                dispose();
-                new LoginView(); 
-            }
-        });
-        
+        // AÇÕES DOS BOTÕES
         btnBuscarMusicas.addActionListener(e -> {
-            new BuscarMusicaView();
+            dispose();
+            new BuscarMusicaView(idUsuario);
         });
 
-        add(panel);
+        btnListarInfos.addActionListener(e -> {
+            // você pode implementar ou remover caso esteja dentro da BuscarMusicaView
+            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+        });
+
+        btnCurtirDescurtir.addActionListener(e -> {
+            // futuro: chamar nova view passando idUsuario
+            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+        });
+
+        btnGerenciarPlaylists.addActionListener(e -> {
+            // futuro: chamar nova view passando idUsuario
+            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+        });
+
+        btnHistorico.addActionListener(e -> {
+            // futuro: chamar nova view passando idUsuario
+            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+        });
+
+        btnVoltar.addActionListener(e -> {
+            dispose();
+            new InicioView();
+        });
+
         setVisible(true);
     }
 }

@@ -1,10 +1,11 @@
 package view;
 
 import dao.UsuarioDAO;
+import model.Usuario;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class LoginView extends JFrame {
 
@@ -18,12 +19,11 @@ public class LoginView extends JFrame {
         setLocationRelativeTo(null);
 
         JLabel lblEmail = new JLabel("Email:");
-        txtEmail = new JTextField(20);
-
         JLabel lblSenha = new JLabel("Senha:");
+        txtEmail = new JTextField(20);
         txtSenha = new JPasswordField(20);
-
         JButton btnLogin = new JButton("Entrar");
+
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -52,8 +52,9 @@ public class LoginView extends JFrame {
         try {
             if (usuarioDAO.verificarLogin(email, senha)) {
                 JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
+                int idUsuario = usuarioDAO.obterIdUsuario(email);
                 dispose();
-                new MenuView();
+                new MenuView(idUsuario); // Passando ID para a próxima tela
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos.");
             }

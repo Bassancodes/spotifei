@@ -31,4 +31,9 @@ public class Musica {
 
     public int getIdArtista() { return idArtista; }
     public void setIdArtista(int idArtista) { this.idArtista = idArtista; }
+
+    @Override
+    public String toString() {
+        return titulo + " (" + genero + ")";
+    }
 }
