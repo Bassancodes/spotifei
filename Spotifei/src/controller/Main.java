@@ -1,4 +1,5 @@
 package controller;
+
 import view.InicioView;
 
 public class Main {

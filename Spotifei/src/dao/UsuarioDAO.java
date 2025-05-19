@@ -1,15 +1,13 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import model.Usuario;
 
 public class UsuarioDAO {
 
     public void cadastrarUsuario(Usuario u) {
         String sql = "INSERT INTO usuario (id, nome, email, senha) VALUES (?, ?, ?, ?)";
+
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, u.getId());
@@ -25,6 +23,7 @@ public class UsuarioDAO {
 
     public boolean verificarLogin(String email, String senha) {
         String sql = "SELECT * FROM usuario WHERE email = ? AND senha = ?";
+
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);

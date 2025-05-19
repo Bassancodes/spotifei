@@ -1,34 +1,46 @@
-// InicioView.java
 package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InicioView extends JFrame {
+
     public InicioView() {
-        setTitle("Spotifei - Início");
+        setTitle("Spotifei - Bem-vindo");
         setSize(300, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        JLabel titulo = new JLabel("Bem-vindo ao Spotifei!");
+        titulo.setHorizontalAlignment(SwingConstants.CENTER);
+
         JButton btnLogin = new JButton("Login");
-        JButton btnRegistro = new JButton("Registrar");
+        JButton btnRegistrar = new JButton("Registrar");
 
-        btnLogin.addActionListener(e -> {
-            dispose();
-            new LoginView();
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new LoginView();
+            }
         });
 
-        btnRegistro.addActionListener(e -> {
-            dispose();
-            new RegistroView();
+        btnRegistrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new RegistroView();
+            }
         });
 
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new GridLayout(3, 1, 10, 10));
+        panel.add(titulo);
         panel.add(btnLogin);
-        panel.add(btnRegistro);
+        panel.add(btnRegistrar);
 
-        add(panel, BorderLayout.CENTER);
+        add(panel);
         setVisible(true);
     }
 }

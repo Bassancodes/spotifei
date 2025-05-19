@@ -1,13 +1,10 @@
 package view;
 
 import dao.UsuarioDAO;
-import model.Usuario;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class LoginView extends JFrame {
 
@@ -27,7 +24,6 @@ public class LoginView extends JFrame {
         txtSenha = new JPasswordField(20);
 
         JButton btnLogin = new JButton("Entrar");
-
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,13 +53,12 @@ public class LoginView extends JFrame {
             if (usuarioDAO.verificarLogin(email, senha)) {
                 JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
                 dispose();
-                // Aqui você pode chamar a próxima tela
-                // new MenuView(); 
+                new InicioView();
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos.");
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao tentar logar: " + ex.getMessage());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro inesperado: " + ex.getMessage());
         }
     }
 }

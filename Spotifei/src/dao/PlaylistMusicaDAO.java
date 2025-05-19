@@ -3,14 +3,15 @@ package dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import model.Musica;
 import model.PlaylistMusica;
+import model.Musica;
 
 public class PlaylistMusicaDAO {
+
     public void vincularMusica(PlaylistMusica pm) {
         String sql = "INSERT INTO playlist_musica (id_playlist, id_musica) VALUES (?, ?)";
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = Conexao.conectar()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, pm.getIdPlaylist());
             stmt.setInt(2, pm.getIdMusica());
             stmt.executeUpdate();
@@ -22,11 +23,14 @@ public class PlaylistMusicaDAO {
 
     public List<Musica> listarMusicasDaPlaylist(int idPlaylist) {
         List<Musica> musicas = new ArrayList<>();
-        String sql = "SELECT m.titulo, m.duracao, m.genero FROM musica m "
-                   + "JOIN playlist_musica pm ON m.id = pm.id_musica "
-                   + "WHERE pm.id_playlist = ?";
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sql = """
+            SELECT m.titulo, m.duracao, m.genero
+            FROM musica m
+            JOIN playlist_musica pm ON m.id = pm.id_musica
+            WHERE pm.id_playlist = ?
+        """;
+        try (Connection conn = Conexao.conectar()) {
+            PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idPlaylist);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
