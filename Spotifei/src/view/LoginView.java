@@ -53,7 +53,7 @@ public class LoginView extends JFrame {
             if (usuarioDAO.verificarLogin(email, senha)) {
                 JOptionPane.showMessageDialog(this, "Login realizado com sucesso!");
                 dispose();
-                new InicioView();
+                new MenuView();
             } else {
                 JOptionPane.showMessageDialog(this, "Email ou senha incorretos.");
             }
