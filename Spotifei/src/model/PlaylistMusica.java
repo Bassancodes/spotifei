@@ -11,8 +11,6 @@ public class PlaylistMusica {
         this.idMusica = idMusica;
     }
 
-    // Getters e Setters
-
     public int getIdPlaylist() {
         return idPlaylist;
     }
@@ -27,10 +25,5 @@ public class PlaylistMusica {
 
     public void setIdMusica(int idMusica) {
         this.idMusica = idMusica;
-    }
-
-    @Override
-    public String toString() {
-        return "Playlist ID: " + idPlaylist + " | Música ID: " + idMusica;
     }
 }

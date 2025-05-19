@@ -1,28 +1,34 @@
 package model;
 
-public class Artista extends Pessoa {
+public class Artista {
+    private int id;
+    private String nome;
+    private String email;
+    private String senha;
+    private String nomeArtista;
 
-    private String nomeArtistico;
+    public Artista() {}
 
-    public Artista() {
-        super();
+    public Artista(int id, String nome, String email, String senha, String nomeArtista) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.nomeArtista = nomeArtista;
     }
 
-    public Artista(int id, String nome, String email, String senha, String nomeArtistico) {
-        super(id, nome, email, senha);
-        this.nomeArtistico = nomeArtistico;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public String getNomeArtistico() {
-        return nomeArtistico;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setNomeArtistico(String nomeArtistico) {
-        this.nomeArtistico = nomeArtistico;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    @Override
-    public String toString() {
-        return "Artista: " + getNome() + " | Nome Artístico: " + nomeArtistico + " | Email: " + getEmail();
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+
+    public String getNomeArtista() { return nomeArtista; }
+    public void setNomeArtista(String nomeArtista) { this.nomeArtista = nomeArtista; }
 }
