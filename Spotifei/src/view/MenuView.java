@@ -42,6 +42,10 @@ public class MenuView extends JFrame {
                 new LoginView(); 
             }
         });
+        
+        btnBuscarMusicas.addActionListener(e -> {
+            new BuscarMusicaView();
+        });
 
         add(panel);
         setVisible(true);

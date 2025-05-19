@@ -1,38 +1,37 @@
 package dao;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import model.Musica;
 
 public class MusicaDAO {
 
-    public void cadastrarMusica(Musica m) {
-        String sql = "INSERT INTO musica (titulo, duracao, genero, id_artista) VALUES (?, ?, ?, ?)";
-        try (Connection conn = Conexao.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, m.getTitulo());
-            stmt.setInt(2, m.getDuracao());
-            stmt.setString(3, m.getGenero());
-            stmt.setInt(4, m.getIdArtista());
-            stmt.executeUpdate();
-            System.out.println("Música cadastrada com sucesso!");
-        } catch (SQLException e) {
-            System.out.println("Erro ao cadastrar música: " + e.getMessage());
-        }
-    }
+    public List<Musica> buscarPorTermo(String termo) {
+        List<Musica> lista = new ArrayList<>();
+        String sql = "SELECT * FROM musica WHERE titulo ILIKE ? OR genero ILIKE ?";
 
-    public int obterUltimoIdMusica() {
-        String sql = "SELECT MAX(id) FROM musica";
-        try (Connection conn = Conexao.conectar()) {
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String termoComLike = "%" + termo + "%";
+            stmt.setString(1, termoComLike);
+            stmt.setString(2, termoComLike);
+
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt(1);
+            while (rs.next()) {
+                Musica m = new Musica();
+                m.setId(rs.getInt("id"));
+                m.setTitulo(rs.getString("titulo"));
+                m.setDuracao(rs.getInt("duracao"));
+                m.setGenero(rs.getString("genero"));
+                m.setIdArtista(rs.getInt("id_artista"));
+                lista.add(m);
             }
+
         } catch (SQLException e) {
-            System.out.println("Erro ao obter último ID da música: " + e.getMessage());
+            System.out.println("Erro ao buscar músicas: " + e.getMessage());
         }
-        return -1;
+
+        return lista;
     }
 }
