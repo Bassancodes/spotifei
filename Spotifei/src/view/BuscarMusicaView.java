@@ -30,14 +30,18 @@ public class BuscarMusicaView extends JFrame {
         setLayout(new BorderLayout());
 
        
-        JPanel painelBusca = new JPanel(new FlowLayout());
+        JPanel painelBusca = new JPanel(new BorderLayout());
+        JPanel linhaSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
         JLabel lblBuscar = new JLabel("Buscar por nome, artista ou gênero:");
-        txtBuscar = new JTextField(20);
+        txtBuscar = new JTextField(25);
         btnBuscar = new JButton("Buscar");
-        painelBusca.add(lblBuscar);
-        painelBusca.add(txtBuscar);
-        painelBusca.add(btnBuscar);
-        add(painelBusca, BorderLayout.NORTH);
+
+        linhaSuperior.add(lblBuscar);
+        linhaSuperior.add(txtBuscar);
+        linhaSuperior.add(btnBuscar);
+
+        painelBusca.add(linhaSuperior, BorderLayout.NORTH);
 
       
         modeloLista = new DefaultListModel<>();

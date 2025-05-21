@@ -6,15 +6,17 @@ public class Musica {
     private int duracao;
     private String genero;
     private int idArtista;
+    private String nomeArtista; // Novo campo
 
     public Musica() {}
 
-    public Musica(int id, String titulo, int duracao, String genero, int idArtista) {
+    public Musica(int id, String titulo, int duracao, String genero, int idArtista, String nomeArtista) {
         this.id = id;
         this.titulo = titulo;
         this.duracao = duracao;
         this.genero = genero;
         this.idArtista = idArtista;
+        this.nomeArtista = nomeArtista;
     }
 
     public int getId() { return id; }
@@ -32,8 +34,11 @@ public class Musica {
     public int getIdArtista() { return idArtista; }
     public void setIdArtista(int idArtista) { this.idArtista = idArtista; }
 
+    public String getNomeArtista() { return nomeArtista; }
+    public void setNomeArtista(String nomeArtista) { this.nomeArtista = nomeArtista; }
+
     @Override
     public String toString() {
-        return titulo + " (" + genero + ")";
+        return titulo + " - " + nomeArtista + " (" + genero + ")";
     }
 }

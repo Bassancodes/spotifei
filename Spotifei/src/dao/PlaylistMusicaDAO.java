@@ -24,14 +24,14 @@ public class PlaylistMusicaDAO {
     public List<Musica> listarMusicasDaPlaylist(int idPlaylist) {
         List<Musica> musicas = new ArrayList<>();
         String sql = """
-            SELECT m.id, m.titulo, m.duracao, m.genero, m.id_artista
+            SELECT m.id, m.titulo, m.duracao, m.genero, m.id_artista, a.nome_artista
             FROM musica m
             JOIN playlist_musica pm ON m.id = pm.id_musica
+            JOIN artista a ON m.id_artista = a.id
             WHERE pm.id_playlist = ?
         """;
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, idPlaylist);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -41,6 +41,7 @@ public class PlaylistMusicaDAO {
                 m.setDuracao(rs.getInt("duracao"));
                 m.setGenero(rs.getString("genero"));
                 m.setIdArtista(rs.getInt("id_artista"));
+                m.setNomeArtista(rs.getString("nome_artista")); // Novo campo
                 musicas.add(m);
             }
         } catch (SQLException e) {
@@ -53,7 +54,6 @@ public class PlaylistMusicaDAO {
         String sql = "DELETE FROM playlist_musica WHERE id_playlist = ? AND id_musica = ?";
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, idPlaylist);
             stmt.setInt(2, idMusica);
             stmt.executeUpdate();

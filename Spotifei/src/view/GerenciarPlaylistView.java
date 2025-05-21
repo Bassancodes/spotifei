@@ -38,14 +38,12 @@ public class GerenciarPlaylistView extends JFrame {
         setLayout(new BorderLayout());
 
         // Painel de criação
-        JPanel painelTopo = new JPanel(new FlowLayout());
-        txtNomePlaylist = new JTextField(20);
-        JButton btnCriar = new JButton("Criar Playlist");
-        btnCriar.addActionListener(e -> criarPlaylist());
+        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelTopo.add(new JLabel("Nome da Playlist:"));
+        txtNomePlaylist = new JTextField(15);
         painelTopo.add(txtNomePlaylist);
+        JButton btnCriar = new JButton("Criar Playlist");
         painelTopo.add(btnCriar);
-        add(painelTopo, BorderLayout.NORTH);
 
         // Painel de conteúdo principal
         JPanel painelCentro = new JPanel(new GridLayout(1, 3));
