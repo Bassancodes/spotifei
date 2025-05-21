@@ -19,14 +19,14 @@ public class MenuView extends JFrame {
 
         JButton btnBuscarMusicas = new JButton("Buscar músicas");
         JButton btnListarInfos = new JButton("Listar informações da música");
-        JButton btnCurtirDescurtir = new JButton("Curtir / Descurtir músicas");
+     
         JButton btnGerenciarPlaylists = new JButton("Gerenciar playlists");
         JButton btnHistorico = new JButton("Visualizar histórico");
         JButton btnVoltar = new JButton("Voltar");
 
         add(btnBuscarMusicas);
         add(btnListarInfos);
-        add(btnCurtirDescurtir);
+      
         add(btnGerenciarPlaylists);
         add(btnHistorico);
         add(btnVoltar);
@@ -42,16 +42,15 @@ public class MenuView extends JFrame {
             JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
         });
 
-        btnCurtirDescurtir.addActionListener(e -> {
-            // futuro: chamar nova view passando idUsuario
-            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
-        });
+
 
         btnGerenciarPlaylists.addActionListener(e -> {
-            // futuro: chamar nova view passando idUsuario
-            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
-        });
-
+            dispose(); // fecha a tela atual
+            new GerenciarPlaylistView(idUsuario); // abre a tela correta
+        });  
+        
+        
+       
         btnHistorico.addActionListener(e -> {
             // futuro: chamar nova view passando idUsuario
             JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
