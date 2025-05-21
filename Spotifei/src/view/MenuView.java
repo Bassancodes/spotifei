@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MenuView extends JFrame {
-
     private int idUsuario;
 
     public MenuView(int idUsuario) {
@@ -19,14 +18,12 @@ public class MenuView extends JFrame {
 
         JButton btnBuscarMusicas = new JButton("Buscar músicas");
         JButton btnListarInfos = new JButton("Listar informações da música");
-     
         JButton btnGerenciarPlaylists = new JButton("Gerenciar playlists");
         JButton btnHistorico = new JButton("Visualizar histórico");
         JButton btnVoltar = new JButton("Voltar");
 
         add(btnBuscarMusicas);
         add(btnListarInfos);
-      
         add(btnGerenciarPlaylists);
         add(btnHistorico);
         add(btnVoltar);
@@ -36,24 +33,24 @@ public class MenuView extends JFrame {
             dispose();
             new BuscarMusicaView(idUsuario);
         });
-
+        
+        
         btnListarInfos.addActionListener(e -> {
-            // você pode implementar ou remover caso esteja dentro da BuscarMusicaView
-            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+            dispose();
+            new ListarMusicasView(idUsuario);
         });
 
+        
 
 
         btnGerenciarPlaylists.addActionListener(e -> {
-            dispose(); // fecha a tela atual
-            new GerenciarPlaylistView(idUsuario); // abre a tela correta
-        });  
-        
-        
-       
+            dispose();
+            new GerenciarPlaylistView(idUsuario);
+        });
+
         btnHistorico.addActionListener(e -> {
-            // futuro: chamar nova view passando idUsuario
-            JOptionPane.showMessageDialog(this, "Funcionalidade ainda não implementada.");
+            dispose();
+         ///   new HistoricoView(idUsuario);
         });
 
         btnVoltar.addActionListener(e -> {
