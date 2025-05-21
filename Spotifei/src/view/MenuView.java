@@ -50,7 +50,7 @@ public class MenuView extends JFrame {
 
         btnHistorico.addActionListener(e -> {
             dispose();
-         ///   new HistoricoView(idUsuario);
+            new HistoricoView(idUsuario);
         });
 
         btnVoltar.addActionListener(e -> {
