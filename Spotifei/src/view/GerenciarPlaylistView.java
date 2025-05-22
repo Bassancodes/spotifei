@@ -38,12 +38,14 @@ public class GerenciarPlaylistView extends JFrame {
         setLayout(new BorderLayout());
 
         // Painel de criação
-        JPanel painelTopo = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelTopo.add(new JLabel("Nome da Playlist:"));
-        txtNomePlaylist = new JTextField(15);
-        painelTopo.add(txtNomePlaylist);
+        JPanel painelTopo = new JPanel(new FlowLayout());
+        txtNomePlaylist = new JTextField(20);
         JButton btnCriar = new JButton("Criar Playlist");
+        btnCriar.addActionListener(e -> criarPlaylist());
+        painelTopo.add(new JLabel("Nome da Playlist:"));
+        painelTopo.add(txtNomePlaylist);
         painelTopo.add(btnCriar);
+        add(painelTopo, BorderLayout.NORTH);
 
         // Painel de conteúdo principal
         JPanel painelCentro = new JPanel(new GridLayout(1, 3));
@@ -57,7 +59,7 @@ public class GerenciarPlaylistView extends JFrame {
         // Busca e lista de músicas
         JPanel painelBusca = new JPanel(new BorderLayout());
         JPanel painelBuscar = new JPanel();
-        txtBuscarMusica = new JTextField(10);
+        txtBuscarMusica = new JTextField(5);
         JButton btnBuscar = new JButton("Buscar");
         btnBuscar.addActionListener(e -> buscarMusicas());
         painelBuscar.add(new JLabel("Buscar música:"));
