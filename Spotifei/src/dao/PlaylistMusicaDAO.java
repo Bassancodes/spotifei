@@ -62,4 +62,18 @@ public class PlaylistMusicaDAO {
             System.out.println("Erro ao remover música da playlist: " + e.getMessage());
         }
     }
+    public void removerTodasMusicasDaPlaylist(int idPlaylist) {
+        String sql = "DELETE FROM playlist_musica WHERE id_playlist = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPlaylist);
+            stmt.executeUpdate();
+            System.out.println("Todas as músicas foram removidas da playlist.");
+        } catch (SQLException e) {
+            System.out.println("Erro ao remover músicas da playlist: " + e.getMessage());
+        }
+    }
+    
+    
+    
 }

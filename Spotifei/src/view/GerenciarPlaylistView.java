@@ -98,8 +98,33 @@ public class GerenciarPlaylistView extends JFrame {
 
         atualizarPlaylists();
         setVisible(true);
+        
+        JButton btnExcluir = new JButton("Excluir Playlist");
+        btnExcluir.addActionListener(e -> excluirPlaylist());
+        painelTopo.add(btnExcluir);
+        
     }
 
+    
+    private void excluirPlaylist() {
+    Playlist selecionada = listaPlaylists.getSelectedValue();
+    if (selecionada != null) {
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Tem certeza que deseja excluir a playlist '" + selecionada.getNome() + "'?", 
+            "Confirmação", JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            playlistMusicaDAO.removerTodasMusicasDaPlaylist(selecionada.getId());
+            playlistDAO.excluirPlaylist(selecionada.getId());
+            playlistDAO.excluirPlaylist(selecionada.getId());
+            atualizarPlaylists();
+            modelMusicasPlaylist.clear();
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Selecione uma playlist para excluir.");
+    }
+}
+    
     private void criarPlaylist() {
         String nome = txtNomePlaylist.getText().trim();
         if (!nome.isEmpty()) {

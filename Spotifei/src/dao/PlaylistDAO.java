@@ -19,7 +19,17 @@ public class PlaylistDAO {
             System.out.println("Erro ao criar playlist: " + e.getMessage());
         }
     }
-
+    public void excluirPlaylist(int idPlaylist) {
+        String sql = "DELETE FROM playlist WHERE id = ?";
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPlaylist);
+            stmt.executeUpdate();
+            System.out.println("Playlist excluída com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao excluir playlist: " + e.getMessage());
+        }
+    }
     public List<Playlist> listarPlaylistsPorUsuario(int idUsuario) {
         List<Playlist> playlists = new ArrayList<>();
         String sql = "SELECT * FROM playlist WHERE id_usuario = ?";
