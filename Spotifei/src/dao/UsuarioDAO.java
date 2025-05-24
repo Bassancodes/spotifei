@@ -16,7 +16,7 @@ public class UsuarioDAO {
     } catch (SQLException e) {
         System.out.println("Erro ao cadastrar usuário: " + e.getMessage());
     }
- }
+}
 
 
     public boolean verificarLogin(String email, String senha) {

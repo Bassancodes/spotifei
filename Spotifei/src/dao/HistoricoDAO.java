@@ -4,7 +4,7 @@ import model.Historico;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import dao.HistoricoCurtidasDAO;
 public class HistoricoDAO {
 
     public void salvarHistorico(Historico h) {

@@ -1,7 +1,9 @@
 package view;
 
 import dao.HistoricoDAO;
+import dao.HistoricoCurtidasDAO;
 import model.Historico;
+import model.HistoricoCurtidas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,13 +14,15 @@ public class HistoricoView extends JFrame {
     private DefaultListModel<String> modelHistorico;
     private JList<String> listaHistorico;
     private HistoricoDAO historicoDAO;
+    private HistoricoCurtidasDAO curtidasDAO;
 
     public HistoricoView(int idUsuario) {
         this.idUsuario = idUsuario;
         this.historicoDAO = new HistoricoDAO();
+        this.curtidasDAO = new HistoricoCurtidasDAO();
 
-        setTitle("Histórico de Buscas");
-        setSize(400, 300);
+        setTitle("Histórico do Usuário");
+        setSize(500, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -34,15 +38,23 @@ public class HistoricoView extends JFrame {
         });
         add(btnVoltar, BorderLayout.SOUTH);
 
-        carregarHistorico();
+        carregarHistoricoCompleto();
         setVisible(true);
     }
 
-    private void carregarHistorico() {
+    private void carregarHistoricoCompleto() {
         modelHistorico.clear();
-        List<Historico> historicoList = historicoDAO.buscarHistoricoPorUsuario(idUsuario);
-        for (Historico h : historicoList) {
-            modelHistorico.addElement(h.getDataHora() + " - " + h.getTermo());
+
+        // Histórico de buscas
+        List<Historico> buscas = historicoDAO.buscarHistoricoPorUsuario(idUsuario);
+        for (Historico h : buscas) {
+            modelHistorico.addElement("[Busca] " + h.getDataHora() + " - " + h.getTermo());
+        }
+
+        // Histórico de curtidas
+        List<HistoricoCurtidas> curtidas = curtidasDAO.listarPorUsuario(idUsuario);
+        for (HistoricoCurtidas hc : curtidas) {
+            modelHistorico.addElement("[Curtida] " + hc.getTituloMusica());
         }
     }
 }

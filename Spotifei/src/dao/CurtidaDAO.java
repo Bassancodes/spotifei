@@ -16,6 +16,7 @@ public class CurtidaDAO {
             stmt.setInt(2, idMusica);
             stmt.executeUpdate();
             System.out.println("Música curtida com sucesso!");
+             new HistoricoCurtidasDAO().salvar(idUsuario, idMusica);
 
         } catch (SQLException e) {
             System.out.println("Erro ao curtir música: " + e.getMessage());
