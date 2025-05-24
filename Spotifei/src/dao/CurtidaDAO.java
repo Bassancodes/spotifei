@@ -1,9 +1,11 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.HistoricoCurtidas;
+import model.HistoricoDescurtida;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurtidaDAO {
 
@@ -16,7 +18,10 @@ public class CurtidaDAO {
             stmt.setInt(2, idMusica);
             stmt.executeUpdate();
             System.out.println("Música curtida com sucesso!");
-             new HistoricoCurtidasDAO().salvar(idUsuario, idMusica);
+
+            // Salvar no histórico de curtidas
+            HistoricoCurtidasDAO historicoDAO = new HistoricoCurtidasDAO();
+            historicoDAO.salvar(idUsuario, idMusica);
 
         } catch (SQLException e) {
             System.out.println("Erro ao curtir música: " + e.getMessage());
@@ -33,6 +38,10 @@ public class CurtidaDAO {
             stmt.executeUpdate();
             System.out.println("Música descurtida com sucesso!");
 
+            
+            HistoricoDescurtida h = new HistoricoDescurtida(idUsuario, idMusica, new Timestamp(System.currentTimeMillis()));
+            new HistoricoDescurtidaDAO().salvar(h);
+
         } catch (SQLException e) {
             System.out.println("Erro ao descurtir música: " + e.getMessage());
         }
@@ -46,7 +55,7 @@ public class CurtidaDAO {
             stmt.setInt(1, idUsuario);
             stmt.setInt(2, idMusica);
             ResultSet rs = stmt.executeQuery();
-            return rs.next(); // true se encontrou uma curtida
+            return rs.next();
 
         } catch (SQLException e) {
             System.out.println("Erro ao verificar curtida: " + e.getMessage());
@@ -61,7 +70,6 @@ public class CurtidaDAO {
 
             stmt.setInt(1, idMusica);
             ResultSet rs = stmt.executeQuery();
-
             if (rs.next()) {
                 return rs.getInt(1);
             }
