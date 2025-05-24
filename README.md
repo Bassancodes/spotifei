@@ -57,12 +57,76 @@ Projeto acadêmico desenvolvido em Java utilizando Swing para a interface gráfi
 
 3. Baixe o PostgreSQL JDBC Driver
 
-4. Ajuste a classe Conexao.java com suas credenciais(as tabelas criadas estao no relatorio, segui o padrao do banco do moodle "Exemplo CRDU - Passo a Passo ):
+4. Ajuste a classe Conexao.java com suas credenciais:
    ```bash
    String url = "jdbc:postgresql://localhost:5432/spotifei";
     String usuario = "postgres";
     String senha = "sua_senha";
+5. (as tabelas criadas estao a baixo, segui o padrao do banco do moodle "Exemplo CRDU - Passo a Passo ):
 
+    ```bash
+   CREATE TABLE pessoa (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(50) NOT NULL
+);
+```bash
+CREATE TABLE usuario (
+    id INTEGER PRIMARY KEY REFERENCES pessoa(id)
+);
+
+CREATE TABLE artista (
+    id INTEGER PRIMARY KEY REFERENCES pessoa(id),
+    nome_artista VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE musica (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(100) NOT NULL,
+    duracao INTEGER NOT NULL,
+    genero VARCHAR(50),
+    id_artista INTEGER REFERENCES artista(id)
+);
+
+CREATE TABLE playlist (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100),
+    id_usuario INTEGER REFERENCES usuario(id)
+);
+
+CREATE TABLE playlist_musica (
+    id_playlist INTEGER REFERENCES playlist(id),
+    id_musica INTEGER REFERENCES musica(id),
+    PRIMARY KEY (id_playlist, id_musica)
+);
+
+CREATE TABLE curtidas (
+    id_usuario INTEGER REFERENCES usuario(id),
+    id_musica INTEGER REFERENCES musica(id),
+    PRIMARY KEY (id_usuario, id_musica)
+);
+
+CREATE TABLE historico (
+    id SERIAL PRIMARY KEY,
+    id_usuario INTEGER REFERENCES usuario(id),
+    termo VARCHAR(255),
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE historico_curtidas (
+    id SERIAL PRIMARY KEY,
+    id_usuario INTEGER REFERENCES usuario(id),
+    id_musica INTEGER REFERENCES musica(id)
+);
+
+CREATE TABLE historico_descurtidas (
+    id SERIAL PRIMARY KEY,
+    id_usuario INTEGER REFERENCES usuario(id),
+    id_musica INTEGER REFERENCES musica(id),
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
 
 - Compile e execute o projeto 
 
