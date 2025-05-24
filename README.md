@@ -2,6 +2,8 @@
 
 Projeto acadêmico desenvolvido em Java utilizando Swing para a interface gráfica e PostgreSQL como banco de dados relacional. O objetivo do sistema é simular uma plataforma de músicas com funcionalidades voltadas a usuários, permitindo buscas, curtidas, criação de playlists e visualização de histórico completo.
 
+
+## video do projeto - https://www.youtube.com/watch?v=bOTNmhW7Rgc
 ---
 
 ##  Funcionalidades Implementadas
