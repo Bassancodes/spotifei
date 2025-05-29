@@ -63,7 +63,7 @@ Projeto acadêmico desenvolvido em Java utilizando Swing para a interface gráfi
    ```bash
    String url = "jdbc:postgresql://localhost:5432/spotifei";
     String usuario = "postgres";
-    String senha = "sua_senha";
+    String senha = "fei123";
 5. (as tabelas criadas estao a baixo, segui o padrao do banco do moodle "Exemplo CRDU - Passo a Passo ):
 
     ```bash
